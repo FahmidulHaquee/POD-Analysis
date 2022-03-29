@@ -1,0 +1,29 @@
+% nan_locations = find(isnan(A));
+
+% A(nan_locations) = 0;
+
+% A = filter2(ones(3,3), A);
+
+% A(nan_locations) = NaN;
+
+T = meanTable_100;
+Delete_NaNs = T.CHC == -2; 
+% T(Delete_NaNs,:) = []; % Removes rows where CHC = -2
+
+% Extract NaN rows
+NaNs_rows =  T(Delete_NaNs,:);
+
+% Counting NaNs
+% [C,ia,ic] = unique(Delete_NaNs);
+% NaN_counts = accumarray(ic,1);
+% value_counts = [C, NaN_counts];
+
+% Return NaN rows back to Snapshot Matrix, X
+
+% Add a new variable to the table.
+% Use the height function to ensure it's the correct height
+
+T.index = (1:height(T)).'
+% If you want the index variable to be displayed first,
+% reorder the columns using indexing
+T = T(:, [3 1 2])
