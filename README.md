@@ -9,7 +9,7 @@ This repository details the application of an unsupervised machine learning tech
 - [Setup](#setup)
 - [Data](#data)
 - [Introduction](#introduction)
-- [POD-Algorithm](#pod-algorithm)
+- [POD Algorithm](#pod-algorithm)
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -34,9 +34,15 @@ This project describes the application of the [Proper Orthogonal Decomposition (
 
 ## Problem Statement
 
-A problem in chemical engineering and fluid mechanics is being able to accurately model the behaviour of a fluid system. The Navier-Stokes equations are a set of differential equations that describe fluid motion of a viscous substance. Although these equations have been developed from first principles using physical laws, it is difficult to model a system using these equations. For most fluid systems, there is an extraordinary number of particles present, thus requiring a computer to calculate the solution for a system. 
+A problem in chemical engineering and fluid mechanics is being able to accurately model the mixing behaviour of a fluid system. It is important to understand the mixing behaiour of a fluid system because this can determine the bulk composition for a batch process or the product composition for a continuous process at any given time. This has important commercial applications because if the mixing behaviour is not investigated, not only may some reactant leave unreacted, some reactant may also back-react with the product, producing an off-spec output, lowering revenue and increasing costs.
+
+## Modelling a Fluid System
+
+The Navier-Stokes equations are a set of differential equations that describe fluid motion of a viscous substance. Although these equations have been developed from first principles using physical laws, it is difficult to model a system using these equations. For most fluid systems, there is an extraordinary number of particles present, thus requiring a computer to calculate the solution for a system. 
 
 Computational Fluid Dynamics attempts to address this problem by making simplifying assumptions to the first principles approach, which can help produce approximate yet more applicable and pracitcal solutions from the Navier-Stokes equations. Usually, the analytical approach is favoured because once a basis is established on how to model a generic system, it can be extrapolated to specific systems. The issue with CFD though is that these models are built semi-empirically, meaning that some experimental data of a similar system informs the governing equations and model for any particular system. There is uncertainty in how similar these systems may be. 
+
+Machine learning provides an alternative means of characterising a fluid system.
 
 In the context of this project, the physical system studied is the 2D cross section of a stirred-tank vessel, which contains only water. The stirred-tank is the simplest of units of chemical engineering and is commonplace in any industrial site, hence why this system is studied.
 
