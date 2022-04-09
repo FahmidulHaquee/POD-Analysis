@@ -9,7 +9,7 @@ This repository details the application of an unsupervised machine learning tech
 - [Setup](#setup)
 - [Data](#data)
 - [Introduction](#introduction)
-- [POD Algorithm](#pod algorithm)
+- [POD-Algorithm](#pod-algorithm)
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
