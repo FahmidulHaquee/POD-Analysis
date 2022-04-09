@@ -36,3 +36,5 @@ The POD technique is applied to a PIV dataset to extract dominant patters in the
 The license for the code can be accessed [here](LICENSE.md)
 
 ## Acknowledgements
+
+I would like to thank [Dr. Alberini](https://www.linkedin.com/in/federico-alberini-advance-measurement-research/) for giving his time and effort during weekly mentoring sessions, providing clear and comprehensive explanations of the research problem. Also, I would like to thank [Igor Carvalho](https://www.linkedin.com/in/igorscarvalho/) for his great time and effort in carrying out the PIV experiments, as well as for assisting me with MATLAB programming. 
