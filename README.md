@@ -55,7 +55,6 @@ The POD technique is applied to a PIV dataset to extract dominant patterns that 
 The data has to arranged into a particular format before it can be fed into the POD algorithm. For every instance of time, the Nx by Ny flowfield has to be re-arranged into a 1 by Nx * Ny matrix, where Nx and Ny are the number of different x and y locations captured respectively. The following code achieves this:
 
 ```
-% 2. Create Snapshot Matrix
 % Initialise X snapshot matrix
 X = [];
 
@@ -85,6 +84,14 @@ end
 For the system, we are only interested in the fluctuations in velocity. Therefore, the average mean with time is calculated for each location, and then subtracted from each data point for that location. After finding the most relevant features, the temporal mean can be added back onto the data points for each point in space and time to reconstruct a low-order model. A low-order model 
 
 ```
+for i = 1:height(T)
+    temp_mean_x = T(i,{'avg vel x'}); % Temproal Average x velocity for 
+    temp_mean_x = table2array(temp_mean_x);
+    temp_mean_y = T(i,{'avg vel y'});
+    temp_mean_y = table2array(temp_mean_y);
+    temp_mean = (temp_mean_x.^2 + temp_mean_y.^2).^(1/2);
+    X(:,i) = X(:,i) - temp_mean;
+end
 ```
 
 ### Calculate Covariance
@@ -94,6 +101,31 @@ The covariance between velocities at different points on the tank is an interest
 If we plot the velocity data for these points over time, an elipse can generally be observed. This implies that there is some correlation between these points in the turbulent flow.
 
 ```
+function [C]=nancov(A,B)
+
+% Program to compute a covariance matrix ignoring NaNs
+%
+% C = nancov(A,B)
+%
+% Nancov determines A*B whilst ignoring NaNs 
+% NaNs are replaced by 0
+% Each element, C(i,j), normalized by the number of 
+% non-NaN values in the vector product A(i,:)*B(:,j).
+%
+% A - LHS matrix 
+% B - RHS matrix 
+% C - Covariance matrix
+
+N_matA=~isnan(A); % Counter matrix
+N_matB=~isnan(B);
+
+A(isnan(A))=0; % Replace NaNs in A,B, and counter matrices
+B(isnan(B))=0; % with zeros
+
+Npts=N_matA*N_matB;
+C=(A*B)./Npts;
+
+end 
 ```
 
 ### Removing NaNs
