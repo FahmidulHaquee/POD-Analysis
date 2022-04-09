@@ -44,12 +44,51 @@ Computational Fluid Dynamics attempts to address this problem by making simplify
 
 [Machine learning](https://en.wikipedia.org/wiki/Machine_learning) algorithms provides an alternative means of characterising a fluid system. Machine learning involve self-teaching algorithms that learn through experience and data compute an output given some input to a model. Machine learning can be classed into 3 categories: supervised, unsupervised and reinforcement learning. Unsupervised learning is applied when the data is unlabelled, implying that the "features" which dictate the output of the model are not previously known. Once the features are known, supervised learning can be applied to build a classification/regression model for the system. For this research problem, it is not previously known to the researcher what features in this dataset are most important. Thus, unsupervised learning is desired for and applied to this context to uncover the important features which constitute this fluid flow.
 
-There are a number of unsupervised learning techniques to find the most pertient features of a dataset.
-It is related to the more widely known [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) from the field of statistics, which looks to reduce a dataset with many dimensions to fewer, more important dimensions. With PCA, each data point is projected with only the first few principal components to obtain lower-dimensional whilst preserving as much of the data's variation, in terms of range, variance and standard deviation.
-
-The POD technique is applied to a PIV dataset to extract dominant patters in the fluid motion
+There are a number of unsupervised learning techniques to find the most pertient features of a dataset. These include clustering, principal component analysis and k-means. The most relevant of them is the [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) from the field of statistics, which looks to reduce a dataset with many dimensions to fewer, more important dimensions. In this case, there are many possible flows and fluctuations that contribute to the behaviour the system. Thus, the PCA can be applied to project every data point using only the pertinent features. If the newly modelled system captures most of the original information whilst using fewer dimensions/features than the original, then it can be said that these fewer features account for most of the behaviour of the system.
 
 ## POD Algorithm
+
+The POD technique is applied to a PIV dataset to extract dominant patterns that resemble the bulk behaviour in the studied fluid system.  For further insight, an article by Weiss provides an excellent explanation through the use of a step-by-step example to provide phyiscal intuition on a complicated mathemtical process. In general, the POD computes the eigendecomposition of a covariance matrix. The covariance matrix 
+
+### Compute Snapshot Matrix
+
+The data has to arranged into a particular format before it can be fed into the POD algorithm. For every instance of time, the Nx by Ny flowfield has to be re-arranged into a 1 by Nx * Ny matrix, where Nx and Ny are the number of different x and y locations captured respectively. The following code achieves this:
+
+```
+```
+
+### Subtract Temporal Mean
+
+For the system, we are only interested in the fluctuations in velocity. Therefore, the average mean with time is calculated for each location, and then subtracted from each data point for that location. After finding the most relevant features, the temporal mean can be added back onto the data points for each point in space and time to reconstruct a low-order model. A low-order model 
+
+```
+```
+
+### Calculate Covariance
+
+The covariance between velocities at different points on the tank is an interesting metric because it describes the correlation between data points. For two points in close proximity, the velocity signals will not be identical but will tend to follow each other, as seen in the figure below. 
+
+If we plot the velocity data for these points over time, an elipse can generally be observed. This implies that there is some correlation between these points in the turbulent flow.
+
+```
+```
+
+### Removing NaNs
+
+```
+```
+
+### Returning NaNs
+
+```
+```
+
+### Retaining High TKE Modes
+
+[Turbulence kinetic energy (TKE)](https://en.wikipedia.org/wiki/Turbulence_kinetic_energy)
+
+```
+```
 
 ## Results
 
