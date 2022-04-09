@@ -42,23 +42,14 @@ The Navier-Stokes equations are a set of differential equations that describe fl
 
 Computational Fluid Dynamics attempts to address this problem by making simplifying assumptions to the first principles approach, which can help produce approximate yet more applicable and pracitcal solutions from the Navier-Stokes equations. Usually, the analytical approach is favoured because once a basis is established on how to model a generic system, it can be extrapolated to specific systems. The issue with CFD though is that these models are built semi-empirically, meaning that some experimental data of a similar system informs the governing equations and model for any particular system. There is uncertainty in how similar these systems may be. 
 
-Machine learning provides an alternative means of characterising a fluid system.
+[Machine learning](https://en.wikipedia.org/wiki/Machine_learning) algorithms provides an alternative means of characterising a fluid system. Machine learning involve self-teaching algorithms that learn through experience and data compute an output given some input to a model. Machine learning can be classed into 3 categories: supervised, unsupervised and reinforcement learning. Unsupervised learning is applied when the data is unlabelled, implying that the "features" which dictate the output of the model are not previously known. Once the features are known, supervised learning can be applied to build a classification/regression model for the system. For this research problem, it is not previously known to the researcher what features in this dataset are most important. Thus, unsupervised learning is desired for and applied to this context to uncover the important features which constitute this fluid flow.
 
-In the context of this project, the physical system studied is the 2D cross section of a stirred-tank vessel, which contains only water. The stirred-tank is the simplest of units of chemical engineering and is commonplace in any industrial site, hence why this system is studied.
-
-[Diagram]
-
-The dataset is in this project represents the x and y-velocity of fluid at ~4,600 locations on a
-
-It is related to the more widely known Principal Component Analysis (PCA) from the field of statistics, which looks to reduce a dataset with many dimensions to fewer, more important dimensions.
-
-With PCA, each data point is projected with only the first few principal components to obtain lower-dimensional whilst preserving as much of the data's variation, in terms of range, variance and standard deviation.
+There are a number of unsupervised learning techniques to find the most pertient features of a dataset.
+It is related to the more widely known [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) from the field of statistics, which looks to reduce a dataset with many dimensions to fewer, more important dimensions. With PCA, each data point is projected with only the first few principal components to obtain lower-dimensional whilst preserving as much of the data's variation, in terms of range, variance and standard deviation.
 
 The POD technique is applied to a PIV dataset to extract dominant patters in the fluid motion
 
-## POD-Overview
-
-## POD-Algorithm
+## POD Algorithm
 
 ## Results
 
@@ -69,7 +60,3 @@ The license for the code can be accessed [here](LICENSE.md)
 ## Acknowledgements
 
 I would like to thank [Dr. Alberini](https://www.linkedin.com/in/federico-alberini-advance-measurement-research/) for giving his time and effort during weekly mentoring sessions, providing clear and comprehensive explanations of the research problem. Also, I would like to thank [Igor Carvalho](https://www.linkedin.com/in/igorscarvalho/) for his great time and effort in carrying out the PIV experiments, as well as for assisting me with MATLAB programming. 
-
-## References 
-
-[Navier-Stokes Equations](https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_equations)
