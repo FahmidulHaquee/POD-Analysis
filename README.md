@@ -10,6 +10,9 @@ This repository details the application of an unsupervised machine learning tech
 - [Data](#data)
 - [Introduction](#introduction)
 - [POD Algorithm](#pod-algorithm)
+    - [Compute Snapshot Matrix](#compute-snapshot-matrix)
+    - [Subtract Temporal Mean](#subtract-temporal-mean)
+    - [Calculate Covariance](#calculate-covariance) 
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -30,7 +33,7 @@ The data can be found in the data folder of this project. It has been parsed and
 
 ## Introduction
 
-This project describes the application of the [Proper Orthogonal Decomposition (POD)](https://en.wikipedia.org/wiki/Proper_orthogonal_decomposition)  technique to a fluid data representing a stirred-tank reactor system. The POD is an unsupervised machine learning technique which looks to extract the dominant pattern present in the stirred-tank system. The POD analysis may potentially provide a more modern and alternative way of modelling the mixing behaviour in fluid systems to [Computation Fluid Dynamics (CFD)](https://en.wikipedia.org/wiki/Computational_fluid_dynamics), which uses numerical analysis and computation to predict the state of a system given some initial state and boundaries. 
+This project describes the application of the [Proper Orthogonal Decomposition (POD)](https://en.wikipedia.org/wiki/Proper_orthogonal_decomposition) technique to fluid data representing the velocity at 4,000 locations on a stirred-tank reactor. The POD is an unsupervised machine learning technique which looks to extract the dominant pattern present in the stirred-tank system. The POD analysis may potentially provide a more modern and alternative way of modelling the mixing behaviour in fluid systems to [Computation Fluid Dynamics (CFD)](https://en.wikipedia.org/wiki/Computational_fluid_dynamics), which uses numerical analysis and computation to predict the state of a system given some initial state and boundaries. 
 
 ## Problem Statement
 
@@ -130,17 +133,42 @@ end
 
 ### Removing NaNs
 
+Before substracting the temporal mean and calculating the covariace, the NaNs present in the data are removed. There are NaNs deliberately introduced by the data, to reflect the position of the impeller and shaft, and NaNs that are unintentionally introduced as a consequence of errors associated with the experiment and processing the data. For now, we are focused on the NaNs that are deliberately introduced, and do not require them when performing the decomposition. The NaNs that are due to experimental errors will remain in the data. When calculating the covariance, a variation of the in-built MATLAB function is written and shown to overcome the issue of NaNs preventing relevant calculations. 
+
 ```
+% 3. Extract and Remove NaN rows
+% Copy mean table, instead of overwrite
+T = meanTable_100;
+
+% Add index column
+T.Index = (1:height(T)).';
+
+% Re order columns
+T = T(:, [end, 1:end-1]);
+
+% Extract rows where CHC == -2 i.e. values are NaN
+Delete_NaNs = T.CHC == -2; 
+
+% Extract NaN rows
+NaNs_rows =  T(Delete_NaNs,:);
+
+% Removes columns where CHC = -2
+X(:,Delete_NaNs) = [];
+
+% Removes rows where CHC = -2
+T(Delete_NaNs,:) = []; 
 ```
 
 ### Returning NaNs
+
+After calculating the POD modes, the NaNs which were extracted are now returned to the modes. Since the index column are consistent between both tables, it is relatively simple procedure to insert the NaNs back into the output.
 
 ```
 ```
 
 ### Retaining High TKE Modes
 
-[Turbulence kinetic energy (TKE)](https://en.wikipedia.org/wiki/Turbulence_kinetic_energy)
+[Turbulence kinetic energy (TKE)](https://en.wikipedia.org/wiki/Turbulence_kinetic_energy) is defined as the kinetic energy per unit mass associated with eddies in turbulent flow. 
 
 ```
 ```
@@ -154,3 +182,7 @@ The license for the code can be accessed [here](LICENSE.md)
 ## Acknowledgements
 
 I would like to thank [Dr. Alberini](https://www.linkedin.com/in/federico-alberini-advance-measurement-research/) for giving his time and effort during weekly mentoring sessions, providing clear and comprehensive explanations of the research problem. Also, I would like to thank [Igor Carvalho](https://www.linkedin.com/in/igorscarvalho/) for his great time and effort in carrying out the PIV experiments, as well as for assisting me with MATLAB programming. 
+
+## Contact
+
+For more information, please feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/fahmidul-haque-b7a96b123/) or write an email to fahmidul@hotmail.com. 
