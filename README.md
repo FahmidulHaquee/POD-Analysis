@@ -164,13 +164,81 @@ T(Delete_NaNs,:) = [];
 After calculating the POD modes, the NaNs which were extracted are now returned to the modes. Since the index column are consistent between both tables, it is relatively simple procedure to insert the NaNs back into the output.
 
 ```
+% 8. Insert NaN rows back into POD Modes 
+
+NaNs_rows = table2array(NaNs_rows);
+POD_modes = table2array(POD_modes);
+POD_modes = vertcat(POD_modes,NaNs_rows);
+POD_modes = array2table(POD_modes,...
+    'VariableNames',{'Index','x_loc','y_loc','Mode1','Mode2','Mode3'});
+
+% Sort based on index
+POD_modes = sortrows(POD_modes,'Index','ascend');
 ```
 
 ### Retaining High TKE Modes
 
-[Turbulence kinetic energy (TKE)](https://en.wikipedia.org/wiki/Turbulence_kinetic_energy) is defined as the kinetic energy per unit mass associated with eddies in turbulent flow. 
+[Turbulence kinetic energy (TKE)](https://en.wikipedia.org/wiki/Turbulence_kinetic_energy) is defined as the kinetic energy per unit mass associated with eddies in turbulent flow. Modes can be associated with a number that describes how much that mode contributes to the total TKE. Modes with a higher TKE contribution can be considered to be physically significant, and may indicate the presence of a structure in the flow. Modes with a lower TKE contribution can be disregarded as insignificant. 
 
 ```
+% 6. Plot Sigma Values
+
+% Compute the fraction of total energy, 
+E_frac  = (LAMBDA/sum(LAMBDA))*100;
+
+% Take first 10 modes
+ilam = sort(ilam);
+
+% Mode # on x
+% Sigma value on Y1
+x = ilam;
+y = E_frac;
+figure
+plot(x(1:10),y(1:10));
+xlabel('Mode #') 
+ylabel('%TKE') 
+title('150 RPM - CT3 - Mode # against %TKE')
+
+% 7. Extract Significant Modes
+% From previous figure
+% Determine how many pertitent modes
+
+POD_modes = PHI(1:3,:); % first 3 modes
+POD_modes = POD_modes'; % transpose
+
+i_x_y = T(:,1:3); % all index, x and y locations
+i_x_y = table2array(i_x_y); % array
+
+% join arrays
+POD_modes = horzcat(i_x_y,POD_modes);
+POD_modes = array2table(POD_modes,...
+    'VariableNames',{'Index','x_loc','y_loc','Mode1','Mode2','Mode3'});
+```
+## Plotting Figures
+
+To provide a view of the modes with respect to the fluid system, a 2D contour plot is drawn, which essentially incorporates 3 dimensions: the x location, the y location and the velocity at each x-y pair.
+
+```
+% 9. Plot 2D contour plots for POD modes
+
+x = table2array(POD_modes(:,2)); % x co-ordinates
+y = table2array(POD_modes(:,3)); % y co-ordinates
+
+n = 4; % corresponding to t =1. For mode 2 and mode 3, 
+% use n = 5 and 6 respectively
+z = table2array(POD_modes(:,n)); % Mode n
+
+[xq,yq] = meshgrid(0:0.01:1,0:0.01:1);
+vq = griddata(x,y,z,xq,yq,'cubic');
+figure
+contourf(xq,yq,vq,30,'edgecolor','none')
+colormap(jet)
+colorbar
+xlabel('Normalised X') 
+ylabel('Normalised Y') 
+title('Mode n at t = 1, at 150 RPM - CT3 - With NaNs')
+
+% The two figure windows will be overlapped
 ```
 
 ## Results
