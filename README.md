@@ -9,13 +9,22 @@ This repository details the application of an unsupervised machine learning tech
 - [Setup](#setup)
 - [Data](#data)
 - [Introduction](#introduction)
+- [Problem Statement](#problem-statement)
+- [Modelling a Fluid System](#modelling-a-fluid-system)
 - [POD Algorithm](#pod-algorithm)
     - [Compute Snapshot Matrix](#compute-snapshot-matrix)
     - [Subtract Temporal Mean](#subtract-temporal-mean)
-    - [Calculate Covariance](#calculate-covariance) 
+    - [Calculate Covariance](#calculate-covariance)
+    - [Performing Eigendecomposition](#performing-eigendecomposition)
+    - [Removing NaNs](#removing-nans)
+    - [Returning NaNs](#returning-nans)
+    - [Retaining High TKE Modes](#retaining=high-tke-modes)
+    - [Plotting Modes](#plotting-modes)
+    - 
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
+- [Contact](#contact)
 
 ## Setup
 
@@ -214,7 +223,7 @@ POD_modes = horzcat(i_x_y,POD_modes);
 POD_modes = array2table(POD_modes,...
     'VariableNames',{'Index','x_loc','y_loc','Mode1','Mode2','Mode3'});
 ```
-## Plotting Figures
+## Plotting Modes
 
 To provide a view of the modes with respect to the fluid system, a 2D contour plot is drawn, which essentially incorporates 3 dimensions: the x location, the y location and the velocity at each x-y pair.
 
@@ -253,4 +262,4 @@ I would like to thank [Dr. Alberini](https://www.linkedin.com/in/federico-alberi
 
 ## Contact
 
-For more information, please feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/fahmidul-haque-b7a96b123/) or write an email to fahmidul@hotmail.com. 
+For more information, please feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/fahmidul-haque-b7a96b123/).
