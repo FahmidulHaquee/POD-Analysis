@@ -20,7 +20,6 @@ This repository details the application of an unsupervised machine learning tech
     - [Returning NaNs](#returning-nans)
     - [Retaining High TKE Modes](#retaining=high-tke-modes)
     - [Plotting Modes](#plotting-modes)
-    - 
 - [Results](#results)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -93,7 +92,7 @@ end
 
 ### Subtract Temporal Mean
 
-For the system, we are only interested in the fluctuations in velocity. Therefore, the average mean with time is calculated for each location, and then subtracted from each data point for that location. After finding the most relevant features, the temporal mean can be added back onto the data points for each point in space and time to reconstruct a low-order model. A low-order model 
+For the system, we are only interested in the fluctuations in velocity. Therefore, the average mean with time is calculated for each location, and then subtracted from each data point for that location. After finding the most relevant features, the temporal mean can be added back onto the data points for each point in space and time to reconstruct a low-order model. A low-order model..
 
 ```
 for i = 1:height(T)
@@ -108,9 +107,9 @@ end
 
 ### Calculate Covariance
 
-The covariance between velocities at different points on the tank is an interesting metric because it describes the correlation between data points. For two points in close proximity, the velocity signals will not be identical but will tend to follow each other, as seen in the figure below. 
+In statistics, covaraince is defined as the joint probability of two variables (think postive, negative and neutral correlation). The covariance between velocities at different points on the tank is an interesting metric because it describes the correlation between data points. If for two points in close proximity, the velocity signals tend to follow each other, or move out-of-sync with each other, this implies that the velocity at these two points are correlated with each other. 
 
-If we plot the velocity data for these points over time, an elipse can generally be observed. This implies that there is some correlation between these points in the turbulent flow.
+The dataset contains NaNs and when comptuting the covariance of a matrix containing NaNs, an error is thrown. Thus, the built-in MATLAB function cannot compute the covariance of the snapshot matrix. Instead, a variation of the covariance function was used, wherein NaNs are simply replaced by 0 to enable the computation. This function was taken from this [source](http://pordlabs.ucsd.edu/matlab/nan.htm).
 
 ```
 function [C]=nancov(A,B)
@@ -138,6 +137,11 @@ Npts=N_matA*N_matB;
 C=(A*B)./Npts;
 
 end 
+```
+The covariance of the snapshot matrix is the computed as follows:
+
+```
+[C]=nancov(X',X);
 ```
 
 ### Removing NaNs
