@@ -1,6 +1,6 @@
 # Proper Orthogonal Decomposition Applied to PIV Fluid Data
 
-## Executive Summary
+## Abstract
 
 This repository details the application of an unsupervised machine learning technique to a dataset containing velocity data at over 4000 locations on a stirred-tank reactor. The fluid system under study is water in a single-phase rotated using a 6-bladed Rushton turbine impeller. The dataset was acquired using 2D Particle Image Velocimetry. The Proper Orthogonal Decomposition is applied to the dataset to uncover dominant coherent structures which exist in the flow. The computational approach taken on MATLAB is discussed, with each step of the methodology explain for its purpose. The POD modes, which relate to the dominant patterns in the flow, are visualised in the results. A discussion of the results follows to better understand the physical interpretation of the modes derived, and comparisons are made with sources from literature to support findings and acquire deeper insights. 
 
